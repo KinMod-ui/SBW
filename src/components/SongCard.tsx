@@ -28,14 +28,6 @@ const songTime = (time: number) => {
   return `${Math.floor(time / 60)}:${time % 60}`;
 };
 
-const convertToLength = (str: string) => {
-  if (str.length < 30) {
-    return str;
-  } else {
-    return `${str.slice(0, 24)}...`;
-  }
-};
-
 // const getInitials = (title: string) => {
 //   const words = title.split(' ');
 //   const ret: string[] = [];
