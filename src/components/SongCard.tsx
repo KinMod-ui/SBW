@@ -1,7 +1,5 @@
-import { Button } from './ui/button';
-
 import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar';
-import { Box, SkeletonCircle, Stack, Text } from '@chakra-ui/react';
+import { SkeletonCircle, Stack, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
 // {

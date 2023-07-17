@@ -1,5 +1,4 @@
 import { Box, Image, Stack, Text } from '@chakra-ui/react';
-import { useState } from 'react';
 
 import { AvatarPage } from './Avatar';
 import { Link } from 'react-router-dom';

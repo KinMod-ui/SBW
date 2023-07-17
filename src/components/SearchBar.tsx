@@ -1,7 +1,6 @@
-import { Box, Text } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { Input } from '../components/ui/input';
-import { colorState } from '../App';
-import { Button } from './ui/button';
+
 import { useEffect, useRef } from 'react';
 import { shadeColor } from '../shadeColor';
 

@@ -70,12 +70,12 @@ function App() {
   );
 }
 
-const tempSong: songType = {
-  artist: 'Coldplay',
-  duration: 290,
-  photo: 'https://i.scdn.co/image/ab67616d0000b273f864bcdcc245f06831d17ae0',
-  title: 'Adventure of a Lifetime ',
-  url: 'https://storage.googleapis.com/similar_sentences/Imagine%20Dragons%20-%20West%20Coast%20(Pendona.com).mp3',
-};
+// const tempSong: songType = {
+//   artist: 'Coldplay',
+//   duration: 290,
+//   photo: 'https://i.scdn.co/image/ab67616d0000b273f864bcdcc245f06831d17ae0',
+//   title: 'Adventure of a Lifetime ',
+//   url: 'https://storage.googleapis.com/similar_sentences/Imagine%20Dragons%20-%20West%20Coast%20(Pendona.com).mp3',
+// };
 
 export default App;

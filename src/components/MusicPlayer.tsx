@@ -9,7 +9,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import type { songType } from './ForYou';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button } from './ui/button';
 import { FaForward, FaBackward, FaPause, FaPlay } from 'react-icons/fa';
 import { Popover, PopoverContent, PopoverTrigger } from '@chakra-ui/react';
@@ -17,7 +17,7 @@ import { HiSpeakerWave } from 'react-icons/hi2';
 import { MdGraphicEq } from 'react-icons/md';
 import { BsThreeDots } from 'react-icons/bs';
 import ColorThief from 'colorthief';
-import img from 'react-image';
+
 import { colorState } from '../App';
 
 type props = {
@@ -25,7 +25,7 @@ type props = {
   songs?: songType[];
   picked: number;
   setColor: React.Dispatch<React.SetStateAction<colorState>>;
-  inputRef: React.RefObject<HTMLInputElement>;
+  inputRef: React.RefObject<HTMLInputElement> | undefined;
 };
 
 const MusicPlayer: React.FC<props> = ({
@@ -36,14 +36,14 @@ const MusicPlayer: React.FC<props> = ({
   inputRef,
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
+  // const [_, setCurrentTime] = useState(0);
   const [value, setValue] = useState('');
 
   const audioComponent = useRef<HTMLAudioElement>(null);
 
   const imageRef = useRef<HTMLImageElement>(null);
 
-  const [dominantColor, setDominantColor] = useState('transparent');
+  // const [dominantColor, setDominantColor] = useState('transparent');
 
   useEffect(() => {
     if (songs && picked >= 0) {
@@ -58,7 +58,7 @@ const MusicPlayer: React.FC<props> = ({
             .map((color) => color.toString(16).padStart(2, '0'))
             .join('')}`;
 
-          setDominantColor(hexColor);
+          // setDominantColor(hexColor);
           setColor({ color: hexColor });
         };
       }
@@ -149,7 +149,7 @@ const MusicPlayer: React.FC<props> = ({
   // }
 
   const currentTimeChange = (v: number) => {
-    setCurrentTime(v);
+    // setCurrentTime(v);
     if (audioComponent.current)
       audioComponent.current.currentTime = Math.floor(
         (v * audioComponent.current.duration) / 100

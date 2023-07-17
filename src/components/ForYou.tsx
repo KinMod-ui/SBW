@@ -1,7 +1,6 @@
 import { Box, Skeleton, SkeletonCircle, Stack, Text } from '@chakra-ui/react';
 import Sidebar from './Sidebar';
 import SearchBar from './SearchBar';
-import { colorState } from '../App';
 import SongCard from './SongCard';
 import { useEffect, useMemo, useState } from 'react';
 import { gql, useQuery } from '@apollo/client';

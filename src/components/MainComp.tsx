@@ -3,7 +3,6 @@ import ForYou, { songType } from './ForYou';
 import TopTracks from './TopTracks';
 import Favourites from './Favourties';
 import RecentlyPlayed from './RecentlyPlayed';
-import { colorState } from '../App';
 
 type props = {
   color: string;

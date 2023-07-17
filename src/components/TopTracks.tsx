@@ -1,6 +1,5 @@
 import { Box } from '@chakra-ui/react';
 import Sidebar from './Sidebar';
-import { colorState } from '../App';
 
 type props = {
   color: string;
