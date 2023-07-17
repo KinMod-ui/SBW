@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar';
-import { SkeletonCircle, Stack, Text } from '@chakra-ui/react';
+import { Box, SkeletonCircle, Stack, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
 // {
@@ -63,49 +63,61 @@ const SongCard: React.FC<songProps> = ({
 
   return (
     <>
-      <button
-        className={`w-[29vw] h-[9.5vh] ${
-          active ? 'bg-neutral-600' : 'bg-transparent'
-        }  ${
-          active ? 'bg-opacity-75 ' : 'bg-opacity-100'
-        } hover:bg-neutral-500 hover:bg-opacity-75 rounded-lg `}
-        onClick={clicked}
+      <Box
+        maxW={'30vw'}
+        position={'relative'}
+        // overflowX={'hidden'}
+        textOverflow={'ellipsis'}
       >
-        <Stack direction={'row'} spacing={4} position={'relative'}>
-          <Avatar className="h-12 w-12 ml-4 mt-[.875rem]">
-            <AvatarImage src={songData.photo} />
-            <AvatarFallback>
-              <SkeletonCircle
-                className=" -mt-1  neutral-500 bg-opacity-75 "
-                size={'12'}
-                // bg-slate-900/10
-              />
-            </AvatarFallback>
-          </Avatar>
-          <Stack spacing={1.5} className="mt-[1.125rem]" mb={4}>
+        <button
+          className={`w-[29vw] h-[9.5vh] ${
+            active ? 'bg-neutral-600' : 'bg-transparent'
+          }  ${
+            active ? 'bg-opacity-75 ' : 'bg-opacity-100'
+          } hover:bg-neutral-500 hover:bg-opacity-75 rounded-lg `}
+          onClick={clicked}
+        >
+          <Stack direction={'row'} spacing={4} position={'relative'}>
+            <Avatar className="h-12 w-12 ml-4 mt-[.875rem]">
+              <AvatarImage src={songData.photo} />
+              <AvatarFallback>
+                <SkeletonCircle
+                  className=" -mt-1  neutral-500 bg-opacity-75 "
+                  size={'12'}
+                  // bg-slate-900/10
+                />
+              </AvatarFallback>
+            </Avatar>
+            <Stack spacing={1.5} className="mt-[1.125rem]" mb={4}>
+              <Box
+                // bg={'green.200'}
+                className="hidden md:block md:max-w-[14vw] lg:max-w-[18vw]"
+              >
+                <Text
+                  className=" text-left text-md text-white text-opacity-80 font-semibold leading-none truncate"
+                  fontSize={'medium'}
+                >
+                  {songData.title}
+                </Text>
+                <Text
+                  className="text-left text-sm text-white text-opacity-40 truncate"
+                  fontSize={'small'}
+                >
+                  {songData.artist}
+                </Text>
+              </Box>
+            </Stack>
             <Text
-              className=" text-left text-md text-white text-opacity-80 font-semibold leading-none "
-              fontSize={'medium'}
+              position={'absolute'}
+              right={'4'}
+              fontSize={''}
+              className="text-white text-opacity-70 mt-6"
             >
-              {convertToLength(songData.title)}
-            </Text>
-            <Text
-              className="text-left text-sm text-white text-opacity-40 "
-              fontSize={'small'}
-            >
-              {convertToLength(songData.artist)}
+              {songTime(songData.duration)}
             </Text>
           </Stack>
-          <Text
-            position={'absolute'}
-            right={'4'}
-            fontSize={''}
-            className="text-white text-opacity-70 mt-6"
-          >
-            {songTime(songData.duration)}
-          </Text>
-        </Stack>
-      </button>
+        </button>
+      </Box>
     </>
   );
 };

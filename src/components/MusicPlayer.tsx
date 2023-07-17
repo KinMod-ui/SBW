@@ -165,21 +165,22 @@ const MusicPlayer: React.FC<props> = ({
               textColor={'whiteAlpha.900'}
               fontWeight={'extrabold'}
               fontSize={'4xl'}
+              className="truncate"
             >
               {song.title}
             </Text>
             <Text
               // textColor={'whiteAlpha.900'}
               fontSize={'medium'}
-              className="text-opacity-60 text-white"
+              className="text-opacity-60 text-white truncate"
             >
               {song.artist}
             </Text>
             <Image
               mt={'2vh'}
               ref={imageRef}
-              // className={'lg:min-w-[33vw] md:min-w-[33vw] max-h-[45vh]'}
-              className={'lg:h-[45vh] lg:w-[33vw]'}
+              className={'min-h-[50vh] max-h-[55vh] min-w-[33vw] '}
+              // className={'  shadow-lg rounded-lg'}
               src={song.photo}
             ></Image>
             <audio ref={audioComponent} src={song.url} preload="metadata" />
