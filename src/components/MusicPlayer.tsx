@@ -1,5 +1,6 @@
 import {
   Box,
+  IconButton,
   Image,
   Slider,
   SliderFilledTrack,
@@ -25,6 +26,7 @@ type props = {
   songs?: songType[];
   picked: number;
   setColor: React.Dispatch<React.SetStateAction<colorState>>;
+  setPicked: React.Dispatch<React.SetStateAction<number>>;
   inputRef: React.RefObject<HTMLInputElement> | undefined;
 };
 
@@ -33,11 +35,13 @@ const MusicPlayer: React.FC<props> = ({
   songs,
   picked,
   setColor,
+  setPicked,
   inputRef,
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   // const [_, setCurrentTime] = useState(0);
   const [value, setValue] = useState('');
+  const [imageError, setImageError] = useState(false);
 
   const audioComponent = useRef<HTMLAudioElement>(null);
 
@@ -97,7 +101,7 @@ const MusicPlayer: React.FC<props> = ({
 
   const togglePlayPause = (play?: boolean) => {
     const updateSliderValue = () => {
-      if (audioComponent.current)
+      if (audioComponent.current) {
         setValue(
           String(
             Math.floor(
@@ -106,9 +110,14 @@ const MusicPlayer: React.FC<props> = ({
             )
           )
         );
-
-      if (inputRef) {
-        inputRef.current?.focus();
+        if (
+          Math.floor(
+            (audioComponent.current.currentTime * 100) /
+              audioComponent.current.duration
+          ) === 100
+        ) {
+          handleNextSong(1);
+        }
       }
     };
     // console.log(isPlaying);
@@ -133,16 +142,37 @@ const MusicPlayer: React.FC<props> = ({
   };
 
   useEffect(() => {
-    if (picked !== -1 && audioComponent.current && songs) {
+    console.log(picked, song, songs);
+    if (
+      picked !== -1 &&
+      songs !== undefined &&
+      songs.length !== 0 &&
+      audioComponent.current !== null
+    ) {
       audioComponent.current.src = songs[picked].url;
       togglePlayPause(true);
     }
     // setIsPlaying(true)
-  }, [picked, songs]);
+  }, [picked, song]);
 
-  if (!song || !songs) {
-    return <></>;
-  }
+  // useEffect(() => {
+  //   setIsPlaying(false);
+  // }, []);
+
+  // useEffect(() => {
+  //   console.log(songs);
+  //   if (
+  //     picked !== -1 &&
+  //     songs !== undefined &&
+  //     songs.length !== 0 &&
+  //     audioComponent.current !== null
+  //   ) {
+  //     audioComponent.current.src = songs[picked].url;
+  //     togglePlayPause(false);
+  //   }
+  //   setPicked(-1);
+  //   // setIsPlaying(true)
+  // }, [songs]);
 
   // if (value === 100) {
   //   setIsPlaying(false);
@@ -156,36 +186,68 @@ const MusicPlayer: React.FC<props> = ({
       );
   };
 
+  const handleImageError = () => {
+    // Image failed to load, set the error state to true
+    setImageError(true);
+  };
+
+  // console.log(picked >= 0 ? songs[picked].photo : -1);
+
+  const handleNextSong = (dif: number) => {
+    if (songs)
+      if (dif === 1) {
+        setPicked((prev) => (prev + 1) % songs.length);
+      } else {
+        setPicked((prev) => (prev - 1 + songs.length) % songs.length);
+      }
+  };
+
   return (
     <>
-      {songs.length > 0 && (
-        <Stack className="ml-[8vw]" mt={'11vh'} spacing={1}>
-          <Box maxWidth={'33vw'} className="relative">
+      {
+        <Box className="relative" mr={'5vw'}>
+          <Stack
+            className="ml-[20.25vw] md:ml-[6.5vw]"
+            mt={{ base: '10vh', md: '11vh' }}
+            spacing={1}
+          >
             <Text
               textColor={'whiteAlpha.900'}
               fontWeight={'extrabold'}
               fontSize={'4xl'}
-              className="truncate"
+              className="truncate text-center md:text-left"
             >
-              {song.title}
+              {song?.title || ''}
             </Text>
             <Text
               // textColor={'whiteAlpha.900'}
               fontSize={'medium'}
-              className="text-opacity-60 text-white truncate"
+              className="text-center md:text-left  text-opacity-60 text-white truncate"
             >
-              {song.artist}
+              {song?.artist || ''}
             </Text>
-            <Image
-              mt={'2vh'}
-              ref={imageRef}
-              className={'min-h-[50vh] max-h-[55vh] min-w-[33vw] '}
-              // className={'  shadow-lg rounded-lg'}
-              src={song.photo}
-            ></Image>
-            <audio ref={audioComponent} src={song.url} preload="metadata" />
-            <Stack>
-              <Box className="mt-5">
+            {!imageError ? (
+              <Image
+                mt={'2vh'}
+                ref={imageRef}
+                className={'max-h-[50vh] min-w-[25vw] '}
+                // className={'  shadow-lg rounded-lg'}
+                src={song?.photo || '/vinyl.png'}
+                onError={handleImageError}
+              ></Image>
+            ) : (
+              <Image
+                mt={'2vh'}
+                ref={imageRef}
+                className={'max-h-[50vh] min-w-[25vw] '}
+                // className={'  shadow-lg rounded-lg'}
+                src={'/vinyl.png'}
+                onError={handleImageError}
+              ></Image>
+            )}
+            <audio ref={audioComponent} src={song?.url} preload="metadata" />
+            <Stack spacing={1}>
+              <Box className="mt-[2vh]">
                 <Slider
                   aria-label="slider-ex"
                   defaultValue={0}
@@ -194,6 +256,8 @@ const MusicPlayer: React.FC<props> = ({
                   // ref={progressBar}
                   className="border-none"
                   value={value !== 'NaN' ? +value % 100 : 0}
+                  focusThumbOnChange={false}
+                  isDisabled={picked === -1}
                   // width="300px"
                   // className="w-10"
                   // paddingLeft={0}
@@ -213,84 +277,177 @@ const MusicPlayer: React.FC<props> = ({
               </Box>
               <Stack
                 direction={'row'}
-                spacing={0}
+                spacing={'0'}
                 justifyContent="space-between"
-                className={'mt-4'}
+                className={'mt-[.5vh] '}
               >
-                <button className="w-2 h-2 bg-transparent  sm:h-8 sm:w-8 md:h-10 md:w-10 lg:h-12 lg:w-12 rounded-full sm:bg-[#1e1f22] relative ">
-                  <BsThreeDots
-                    color={'white'}
-                    className={
-                      'flex  justify-center align-middle text-xs mt-1.5 sm:mt-0 sm:ml-2 sm:text-base md:ml-2.5  md:text-xl  lg:text-2xl lg:ml-3'
-                    }
-                  />
-                </button>
+                <IconButton
+                  variant={'link'}
+                  // minW={'0vw'}
+                  borderRadius={'full'}
+                  height={{
+                    base: '2.5rem',
+                    sm: '3rem',
+                    md: '3rem',
+                    lg: '3.5rem',
+                  }}
+                  minWidth={{
+                    base: '2.5rem',
+                    sm: '3rem',
+                    md: '3rem',
+                    lg: '3.5rem',
+                  }}
+                  isDisabled={picked === -1}
+                  // width={'3.5rem'}
+                  className="rounded-full  bg-[#1e1d1b] flex justify-center align-middle"
+                  aria-label="settings"
+                  icon={
+                    <BsThreeDots
+                      color={'white'}
+                      // className={
+                      //   'flex  justify-center align-middle text-xs  sm:ml-2 sm:text-base md:ml-2.5  md:text-xl  lg:text-2xl lg:ml-3'
+                      // }
+                      className={
+                        ' h-5 w-5   sm:h-5 sm:w-5   md:text-xl  lg:text-2xl '
+                      }
+                    />
+                  }
+                ></IconButton>
 
-                <Stack direction={'row'} spacing={0}>
-                  <Box>
-                    <Button
-                      variant={'link'}
-                      className="text-xl  text-white opacity-60 -mt-6 sm:-mt-0.5  md:mt-1 lg:mt-2 "
-                    >
+                <Stack direction={'row'} spacing={'1.75vw'}>
+                  {/* <Box> */}
+                  <IconButton
+                    variant={'link'}
+                    color={'white'}
+                    minW={'4vw'}
+                    className="w-3 h-3  opacity-70 "
+                    aria-label="previous song"
+                    isDisabled={picked === -1}
+                    onClick={() => handleNextSong(-1)}
+                    icon={
                       <FaBackward
+                        // stroke-width={2}
                         className={
-                          'text-xs    sm:text-lg  md:text-xl lg:text-2xl'
+                          ' text-lg  sm:text-lg  md:text-xl lg:text-2xl'
                         }
                       />
-                    </Button>
-                  </Box>
-                  <Box mt={-1}>
-                    <button
-                      className="w-6 h-6 mt-1 sm:mt-0 sm:h-10 sm:w-10 md:h-12 md:w-12 lg:h-14 lg:w-14 border-none rounded-full bg-white   pt-[1em]"
-                      onClick={() => togglePlayPause()}
-                    >
-                      {!isPlaying || (value !== 'NaN' && +value === 100) ? (
+                    }
+                  />
+                  {/* </Box> */}
+                  {/* <Box mt={-1}> */}
+                  <IconButton
+                    aria-label="pause/play"
+                    variant={'ghost'}
+                    height={{
+                      base: '2.5rem',
+                      sm: '3rem',
+                      md: '3rem',
+                      lg: '3.5rem',
+                    }}
+                    minWidth={{
+                      base: '2.5rem',
+                      sm: '3rem',
+                      md: '3rem',
+                      lg: '3.5rem',
+                    }}
+                    className=" border-none   bg-white  disabled:bg-transparent disabled:text-white"
+                    isDisabled={picked === -1}
+                    borderRadius="full"
+                    onClick={() => togglePlayPause()}
+                    icon={
+                      !isPlaying || (value !== 'NaN' && +value === 100) ? (
                         <FaPlay
                           className={
-                            'relative left-[0.0125em] sm:left-0.5 border-none  h-3 w-2 ml-2 -mt-3 sm:ml-3 sm:-mt-4 sm:h-4 sm:w-4 md:ml-3 md:-mt-4 md:h-6 md:w-6 lg:ml-4 lg:-mt-[1em] lg:h-8 lg:w-6'
+                            'ml-[.5vw]  border-none h-[1.125rem] w-[1.125rem]   sm:h-4 sm:w-4  md:h-6 md:w-6 l lg:h-8 lg:w-6'
                           }
                           // size={'1.5em'}
                         />
                       ) : (
                         <FaPause
                           // size={'1.5em'}
+                          // className={
+                          //   'border-none h-2 w-2  sm:-mt-4 sm:h-4 sm:w-4 md:ml-3 md:-mt-4 md:h-6 md:w-6 lg:ml-4 lg:-mt-[1em] lg:h-8 lg:w-6'
+                          // }
                           className={
-                            'border-none h-2 w-2 ml-2 -mt-3 sm:ml-3 sm:-mt-4 sm:h-4 sm:w-4 md:ml-3 md:-mt-4 md:h-6 md:w-6 lg:ml-4 lg:-mt-[1em] lg:h-8 lg:w-6'
+                            'border-none h-[1.125rem] w-[1.125rem]   sm:h-4 sm:w-4  md:h-6 md:w-6 lg:h-8 lg:w-6'
                           }
                         />
-                      )}
-                    </button>
-                  </Box>
-                  <Box>
-                    <Button
-                      variant={'link'}
-                      className=" text-xl  text-white opacity-60 -mt-6 sm:-mt-0.5  md:mt-1 lg:mt-2 "
-                    >
+                      )
+                    }
+                  ></IconButton>
+                  {/* </Box> */}
+                  {/* <Box> */}
+                  <IconButton
+                    variant={'link'}
+                    color={'white'}
+                    minW={'4vw'}
+                    className="w-3 h-3  opacity-70 "
+                    aria-label="previous song"
+                    isDisabled={picked === -1}
+                    onClick={() => handleNextSong(1)}
+                    icon={
                       <FaForward
+                        // stroke-width={2}
                         className={
-                          'text-xs    sm:text-lg  md:text-xl lg:text-2xl'
+                          ' text-lg  sm:text-lg  md:text-xl lg:text-2xl'
                         }
                       />
-                    </Button>
-                  </Box>
+                    }
+                  />
+                  {/* </Box> */}
                 </Stack>
 
-                <Popover trigger="hover">
+                <Popover trigger="hover" placement="top" strategy="fixed">
                   <PopoverTrigger>
-                    <button className="w-2 h-2 bg-transparent  sm:h-8 sm:w-8 md:h-10 md:w-10 lg:h-12 lg:w-12 rounded-full sm:bg-[#1e1f22] relative ">
-                      <HiSpeakerWave
-                        className={
-                          'flex justify-center align-middle text-xs mt-1 sm:mt-0 sm:ml-2 sm:text-base md:ml-2.5  md:text-xl  lg:text-2xl lg:ml-3'
-                        }
-                        // size={'1.25em'}
-                        // left={'1em'}
-                        color={'white'}
-                      />
-                    </button>
+                    <IconButton
+                      variant={'link'}
+                      // minW={'0vw'}
+                      borderRadius={'full'}
+                      height={{
+                        base: '2.5rem',
+                        sm: '3rem',
+                        md: '3rem',
+                        lg: '3.5rem',
+                      }}
+                      minWidth={{
+                        base: '2.5rem',
+                        sm: '3rem',
+                        md: '3rem',
+                        lg: '3.5rem',
+                      }}
+                      isDisabled={picked === -1}
+                      // width={'3.5rem'}
+                      className=" rounded-full  bg-[#1e1d1b] flex justify-center align-middle"
+                      aria-label="settings"
+                      icon={
+                        <HiSpeakerWave
+                          // height={{
+                          //   base: '1rem',
+                          //   sm: '2.5rem',
+                          //   md: '2.5rem',
+                          //   lg: '3.5rem',
+                          // }}
+                          // width={{
+                          //   base: '1rem',
+                          //   sm: '2rem',
+                          //   md: '2.5rem',
+                          //   lg: '3.5rem',
+                          // }}
+                          color={'white'}
+                          // className={
+                          //   'flex  justify-center align-middle text-xs  sm:ml-2 sm:text-base md:ml-2.5  md:text-xl  lg:text-2xl lg:ml-3'
+                          // }
+                          className={
+                            ' h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 lg:h-7 lg:w-7 '
+                          }
+                        />
+                      }
+                    ></IconButton>
                   </PopoverTrigger>
                   <PopoverContent
                     bg={'slate-700'}
                     borderColor={'slate-700'}
+                    // minWidth={2}
                     width={0}
                     border={'none'}
                   >
@@ -319,9 +476,9 @@ const MusicPlayer: React.FC<props> = ({
                 {/* </Box> */}
               </Stack>
             </Stack>
-          </Box>
-        </Stack>
-      )}
+          </Stack>
+        </Box>
+      }
     </>
   );
 };

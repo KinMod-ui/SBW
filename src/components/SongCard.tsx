@@ -22,6 +22,7 @@ type songProps = {
   setPicked: React.Dispatch<React.SetStateAction<number>>;
   idx: number;
   picked: number;
+  setClicked: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const songTime = (time: number) => {
@@ -40,15 +41,17 @@ const SongCard: React.FC<songProps> = ({
   setPicked,
   picked,
   idx,
+  setClicked,
 }) => {
   const clicked = () => {
-    console.log(picked, idx);
+    // console.log(picked, idx);
     setPicked(idx);
+    setClicked(true);
   };
 
   const [active, setActive] = useState(false);
 
-  console.log(picked, idx);
+  // console.log(picked, idx);
   useEffect(() => {
     setActive(picked === idx);
   }, [picked, idx]);
@@ -56,21 +59,19 @@ const SongCard: React.FC<songProps> = ({
   return (
     <>
       <Box
-        maxW={'30vw'}
         position={'relative'}
         // overflowX={'hidden'}
-        textOverflow={'ellipsis'}
       >
         <button
-          className={`w-[29vw] h-[9.5vh] ${
+          className={`w-[28vw]  ${
             active ? 'bg-neutral-600' : 'bg-transparent'
           }  ${
             active ? 'bg-opacity-75 ' : 'bg-opacity-100'
-          } hover:bg-neutral-500 hover:bg-opacity-75 rounded-lg `}
+          } hover:bg-neutral-500 hover:bg-opacity-75 rounded-lg flex align-middle`}
           onClick={clicked}
         >
-          <Stack direction={'row'} spacing={4} position={'relative'}>
-            <Avatar className="h-12 w-12 ml-4 mt-[.875rem]">
+          <Stack direction={'row'} spacing={4}>
+            <Avatar className="w-10 h-10  md:w-12 md:h-12 sm:mt-4 flex  mt-3 ml-2 align-middle">
               <AvatarImage src={songData.photo} />
               <AvatarFallback>
                 <SkeletonCircle
@@ -80,11 +81,13 @@ const SongCard: React.FC<songProps> = ({
                 />
               </AvatarFallback>
             </Avatar>
-            <Stack spacing={1.5} className="mt-[1.125rem]" mb={4}>
-              <Box
-                // bg={'green.200'}
-                className="hidden md:block md:max-w-[14vw] lg:max-w-[18vw]"
-              >
+            <Box
+              // bg={'green.200'}
+              // className=" md:max-w-[14vw] lg:max-w-[18vw] "
+              maxW={'16vw'}
+              textOverflow={'ellipsis'}
+            >
+              <Stack spacing={1.25} className="mt-[1.25rem]" mb={4}>
                 <Text
                   className=" text-left text-md text-white text-opacity-80 font-semibold leading-none truncate"
                   fontSize={'medium'}
@@ -97,13 +100,13 @@ const SongCard: React.FC<songProps> = ({
                 >
                   {songData.artist}
                 </Text>
-              </Box>
-            </Stack>
+              </Stack>
+            </Box>
             <Text
               position={'absolute'}
-              right={'4'}
+              right={'2vw'}
               fontSize={''}
-              className="text-white text-opacity-70 mt-6"
+              className="hidden lg:block text-white text-opacity-70 mt-6"
             >
               {songTime(songData.duration)}
             </Text>

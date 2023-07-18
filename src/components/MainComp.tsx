@@ -36,11 +36,38 @@ const MainComp: React.FC<props> = ({
           />
         }
       />
-      <Route path="/toptracks" element={<TopTracks color={color} />} />
-      <Route path="/favourites" element={<Favourites color={color} />} />
+      <Route
+        path="/toptracks"
+        element={
+          <TopTracks
+            color={color}
+            setSongs={setSongs}
+            setPicked={setPicked}
+            picked={picked}
+          />
+        }
+      />
+      <Route
+        path="/favourites"
+        element={
+          <Favourites
+            color={color}
+            setSongs={setSongs}
+            setPicked={setPicked}
+            picked={picked}
+          />
+        }
+      />
       <Route
         path="/recentlyPlayed"
-        element={<RecentlyPlayed color={color} />}
+        element={
+          <RecentlyPlayed
+            color={color}
+            setSongs={setSongs}
+            setPicked={setPicked}
+            picked={picked}
+          />
+        }
       />
     </Routes>
   );

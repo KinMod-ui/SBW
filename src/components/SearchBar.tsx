@@ -7,12 +7,9 @@ import { shadeColor } from '../shadeColor';
 type props = {
   color: string;
   setSearchInput: React.Dispatch<React.SetStateAction<string>>;
-  setInputRef: React.Dispatch<
-    React.SetStateAction<React.RefObject<HTMLInputElement> | undefined>
-  >;
 };
 
-const SearchBar: React.FC<props> = ({ color, setSearchInput, setInputRef }) => {
+const SearchBar: React.FC<props> = ({ color, setSearchInput }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   // useEffect(() => {
@@ -29,9 +26,9 @@ const SearchBar: React.FC<props> = ({ color, setSearchInput, setInputRef }) => {
   //   return () => clearInterval(intervalId);
   // });
 
-  useEffect(() => {
-    if (setInputRef) setInputRef(inputRef);
-  }, [inputRef, setInputRef]);
+  // useEffect(() => {
+  //   if (setInputRef) setInputRef(inputRef);
+  // }, [inputRef, setInputRef]);
 
   //   console.log(`bg-[${color}]`);
   return (

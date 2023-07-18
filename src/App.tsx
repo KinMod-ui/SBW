@@ -7,6 +7,7 @@ import MainComp from './components/MainComp';
 import { useState } from 'react';
 import { songType } from './components/ForYou';
 import { shadeColor } from './shadeColor';
+import Sidebar from './components/Sidebar';
 
 export type colorState = {
   color: string;
@@ -33,33 +34,53 @@ function App() {
     <>
       {/* <Layout staticComponent={<MusicPlayer />}> */}
       {/* <Routes> */}
-      <Stack direction={'row'} spacing={0} style={gradientStyle}>
-        <Box
-          h="100vh"
-          w={'50vw'}
+      <Stack
+        direction={{ base: 'column', md: 'row' }}
+        // spacing={{ base: '6vh', md: 0 }}
+        height={'100vh'}
+        style={gradientStyle}
+        spacing={'auto'}
+        justify={'space-between'}
+      >
+        <Box className="h-[15vh] w-100vw md:w-20vw md:h-100vh">
+          <Sidebar />
+        </Box>
+        <Stack
+          direction={{ base: 'column-reverse', md: 'row' }}
+          h={{ base: '70vh', md: '100vh' }}
+          w={'80vw'}
           // bg={color.color}
+          // mt={{ base: '10vh', md: 0 }}
+          spacing={{ base: '5vh', md: '0' }}
         >
-          <MainComp
-            color={color.color}
-            setSongs={setSongs}
-            setPicked={setPicked}
-            setInputRef={setInputRef}
-            picked={picked}
-          />
-        </Box>
-        <Box
-          h="100vh"
-          w={'50vw'}
-          // bg={}
-        >
-          <MusicPlayer
-            song={picked > -1 ? songs[picked] : undefined}
-            songs={songs}
-            setColor={setColor}
-            inputRef={inputRef}
-            picked={picked}
-          />
-        </Box>
+          <Box
+            h={{ base: '5vh', md: 'auto' }}
+            mb={{ base: '5vh', md: '0' }}
+            className="w-[90vw] md:w-[30vw] flex align-middle justify-center"
+          >
+            <MainComp
+              color={color.color}
+              setSongs={setSongs}
+              setPicked={setPicked}
+              setInputRef={setInputRef}
+              picked={picked}
+            />
+          </Box>
+          <Box
+            // bg={}
+            className="w-[86vw] md:w-[50vw] "
+          >
+            <MusicPlayer
+              song={picked > -1 ? songs[picked] : undefined}
+              songs={songs}
+              setColor={setColor}
+              inputRef={inputRef}
+              picked={picked}
+              setPicked={setPicked}
+            />
+          </Box>
+        </Stack>
+
         {/* <Box h="100vh" w={'50vw'} bg="green" pt={8}>
               Hehe
             </Box> */}
