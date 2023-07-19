@@ -180,83 +180,72 @@ const Sidebar = () => {
                   {!isOpen ? <HiMenu /> : <RxCross2 />}
                 </MenuButton>
                 <MenuList className="bg-black">
-                  <MenuItem>
-                    <Button
-                      onClick={() => {
-                        selected = 0;
-                      }}
-                      variant={'ghost'}
-                      className="rounded-sm hover:bg-white hover:text-black focus:bg-white focus:text-black  justify-start whitespace-nowrap text-left  w-fit "
-                    >
-                      <Text
-                        textColor={`${
-                          selected === 0 ? 'whiteAlpha.900' : 'whiteAlpha.600'
-                        }`}
+                  <MenuItem
+                    className="mt-1 rounded-sm hover:bg-white hover:text-black focus:bg-white focus:text-black  justify-start whitespace-nowrap text-left  w-fit ml-4"
+                    onClick={() => {
+                      selected = 0;
+                    }}
+                  >
+                    <Text
+                      textColor={`${
+                        selected === 0 ? 'whiteAlpha.900' : 'whiteAlpha.600'
+                      }`}
 
-                        // fontSize={{ base: 'xs', md: 'medium' }}
-                      >
-                        <Link to={'/'}>{Names[0]}</Link>
-                      </Text>
-                    </Button>
+                      // fontSize={{ base: 'xs', md: 'medium' }}
+                    >
+                      <Link to={'/'}>{Names[0]}</Link>
+                    </Text>
                   </MenuItem>
-                  <MenuItem>
-                    <Button
-                      onClick={() => {
-                        selected = 1;
-                      }}
+                  <MenuItem
+                    className="mt-1 rounded-sm hover:bg-white hover:text-black focus:bg-white focus:text-black  justify-start whitespace-nowrap text-left  w-fit ml-4"
+                    onClick={() => {
+                      selected = 1;
+                    }}
+                  >
+                    {/* <Button
                       variant={'ghost'}
                       className="rounded-sm hover:bg-white hover:text-black focus:bg-white focus:text-black  justify-start whitespace-nowrap text-left  w-fit "
+                    > */}
+                    <Text
+                      textColor={`${
+                        selected === 1 ? 'whiteAlpha.900' : 'whiteAlpha.600'
+                      }`}
+                      // fontSize={{ base: 'xs', md: 'medium' }}
                     >
-                      <Text
-                        textColor={`${
-                          selected === 1 ? 'whiteAlpha.900' : 'whiteAlpha.600'
-                        }`}
-                        // fontSize={{ base: 'xs', md: 'medium' }}
-                      >
-                        <Link to={'/toptracks'}>{Names[1]}</Link>
-                      </Text>
-                    </Button>
+                      <Link to={'/toptracks'}>{Names[1]}</Link>
+                    </Text>
+                    {/* </Button> */}
                   </MenuItem>
-                  <MenuItem>
-                    <Button
-                      onClick={() => {
-                        selected = 2;
-                      }}
-                      variant={'ghost'}
-                      className="rounded-sm hover:bg-white hover:text-black focus:bg-white focus:text-black  justify-start whitespace-nowrap text-left  w-fit "
+                  <MenuItem
+                    className="mt-1 rounded-sm hover:bg-white hover:text-black focus:bg-white focus:text-black  justify-start whitespace-nowrap text-left  w-fit ml-4"
+                    onClick={() => {
+                      selected = 2;
+                    }}
+                  >
+                    <Text
+                      textColor={`${
+                        selected === 2 ? 'whiteAlpha.900' : 'whiteAlpha.600'
+                      }`}
+                      // fontSize={{ base: 'xs', md: 'medium' }}
                     >
-                      <Text
-                        textColor={`${
-                          selected === 2 ? 'whiteAlpha.900' : 'whiteAlpha.600'
-                        }`}
-                        // fontSize={{ base: 'xs', md: 'medium' }}
-                      >
-                        <Link to={'/favourites'}>{Names[2]}</Link>
-                      </Text>
-                    </Button>
+                      <Link to={'/favourites'}>{Names[2]}</Link>
+                    </Text>
                   </MenuItem>
-                  <MenuItem>
-                    <Button
-                      onClick={() => {
-                        selected = 3;
-                      }}
-                      variant={'ghost'}
-                      className="rounded-sm hover:bg-white hover:text-black focus:bg-white focus:text-black  justify-start whitespace-nowrap text-left  w-fit "
+                  <MenuItem
+                    className="mt-1 rounded-sm hover:bg-white hover:text-black focus:bg-white focus:text-black  justify-start whitespace-nowrap text-left  w-fit ml-4"
+                    onClick={() => {
+                      selected = 3;
+                    }}
+                  >
+                    <Text
+                      textColor={`${
+                        selected === 3 ? 'whiteAlpha.900' : 'whiteAlpha.600'
+                      }`}
+                      // fontSize={{ base: 'xs', md: 'medium' }}
                     >
-                      <Text
-                        textColor={`${
-                          selected === 3 ? 'whiteAlpha.900' : 'whiteAlpha.600'
-                        }`}
-                        // fontSize={{ base: 'xs', md: 'medium' }}
-                      >
-                        <Link to={'/recentlyPlayed'}>{Names[3]}</Link>
-                      </Text>
-                    </Button>
+                      <Link to={'/recentlyPlayed'}>{Names[3]}</Link>
+                    </Text>
                   </MenuItem>
-
-                  {/* <MenuItem onClick={() => alert('Kagebunshin')}>
-                    Create a Copy
-                  </MenuItem> */}
                 </MenuList>
               </>
             )}
