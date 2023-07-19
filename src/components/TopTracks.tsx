@@ -66,7 +66,7 @@ const TopTracks: React.FC<props> = ({ color, setSongs, setPicked, picked }) => {
   useEffect(() => {
     // console.log('clicked', clicked);
     const idx = picked.split(' ');
-    if (+idx[1] === 1) {
+    if (+idx[1] === 2) {
       setSongs((prev) => (prev !== songs ? songs : prev));
       // setClicked(false);
     }

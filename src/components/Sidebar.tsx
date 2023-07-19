@@ -96,12 +96,7 @@ const Sidebar = () => {
                 w={{ base: '80vw' }}
                 justifyContent={'space-between'}
               >
-                <button
-                  onClick={() => {
-                    selected = 0;
-                  }}
-                  className="rounded-sm justify-start whitespace-nowrap text-left  w-fit "
-                >
+                <button className="rounded-sm justify-start whitespace-nowrap text-left  w-fit ">
                   <Text
                     textColor={`${
                       selected === 0 ? 'whiteAlpha.900' : 'whiteAlpha.600'
@@ -111,12 +106,7 @@ const Sidebar = () => {
                     <Link to={'/'}>{Names[0]}</Link>
                   </Text>
                 </button>
-                <button
-                  onClick={() => {
-                    selected = 1;
-                  }}
-                  className="rounded-sm whitespace-nowrap text-left  w-fit "
-                >
+                <button className="rounded-sm whitespace-nowrap text-left  w-fit ">
                   <Text
                     textColor={`${
                       selected === 1 ? 'whiteAlpha.900' : 'whiteAlpha.600'
@@ -126,12 +116,7 @@ const Sidebar = () => {
                     <Link to={'/toptracks'}>{Names[1]}</Link>
                   </Text>
                 </button>
-                <button
-                  onClick={() => {
-                    selected = 2;
-                  }}
-                  className=" rounded-sm whitespace-nowrap text-left  w-fit "
-                >
+                <button className=" rounded-sm whitespace-nowrap text-left  w-fit ">
                   <Text
                     textColor={`${
                       selected === 2 ? 'whiteAlpha.900' : 'whiteAlpha.600'
@@ -141,12 +126,7 @@ const Sidebar = () => {
                     <Link to={'/favourites'}>{Names[2]}</Link>
                   </Text>
                 </button>
-                <button
-                  onClick={() => {
-                    selected = 3;
-                  }}
-                  className="rounded-sm whitespace-nowrap text-left  w-fit "
-                >
+                <button className="rounded-sm whitespace-nowrap text-left  w-fit ">
                   <Text
                     textColor={`${
                       selected === 3 ? 'whiteAlpha.900' : 'whiteAlpha.600'
@@ -183,71 +163,52 @@ const Sidebar = () => {
                   zIndex={'sticky'}
                   className="relative bg-black w-30 rounded-lg"
                 >
-                  <MenuItem
-                    width={'90%'}
-                    className="mt-1 text-lg font-bold rounded-sm hover:bg-white hover:text-black focus:bg-white focus:text-black  justify-start whitespace-nowrap text-left ml-2 mr-2"
-                    onClick={() => {
-                      selected = 0;
-                    }}
-                  >
-                    <Text
-                      textColor={`${
-                        selected === 0 ? 'whiteAlpha.900' : 'whiteAlpha.600'
-                      }`}
-
-                      // fontSize={{ base: 'xs', md: 'medium' }}
-                    >
-                      <Link to={'/'}>{Names[0]}</Link>
-                    </Text>
-                  </MenuItem>
-                  <MenuItem
-                    width={'90%'}
-                    className="mt-1 text-lg font-bold rounded-sm hover:bg-white hover:text-black focus:bg-white focus:text-black  justify-start whitespace-nowrap text-left  w-fit ml-2"
-                    onClick={() => {
-                      selected = 1;
-                    }}
-                  >
-                    {/* <Button
-                      variant={'ghost'}
-                      className="rounded-sm hover:bg-white hover:text-black focus:bg-white focus:text-black  justify-start whitespace-nowrap text-left  w-fit "
-                    > */}
-                    <Text
-                      textColor={`${
-                        selected === 1 ? 'whiteAlpha.900' : 'whiteAlpha.600'
-                      }`}
-                      // fontSize={{ base: 'xs', md: 'medium' }}
-                    >
-                      <Link to={'/toptracks'}>{Names[1]}</Link>
-                    </Text>
-                    {/* </Button> */}
-                  </MenuItem>
-                  <MenuItem
-                    width={'90%'}
-                    className="mt-1 text-lg font-bold rounded-sm hover:bg-white hover:text-black focus:bg-white focus:text-black  justify-start whitespace-nowrap text-left  w-fit ml-2"
-                    onClick={() => {
-                      selected = 2;
-                    }}
-                  >
-                    <Text
-                      textColor={`${
-                        selected === 2 ? 'whiteAlpha.900' : 'whiteAlpha.600'
-                      }`}
-                      // fontSize={{ base: 'xs', md: 'medium' }}
-                    >
-                      <Link to={'/favourites'}>{Names[2]}</Link>
-                    </Text>
-                  </MenuItem>
-                  <MenuItem
-                    width={'90%'}
-                    className="mt-1 text-lg font-bold  rounded-sm hover:bg-white hover:text-black focus:bg-white focus:text-black  justify-start whitespace-nowrap text-left  ml-1.5 mr-2 "
-                    onClick={() => {
-                      selected = 3;
-                    }}
-                  >
+                  <Link to={'/'}>
+                    <MenuItem className="mt-1 text-lg font-bold rounded-sm   justify-start whitespace-nowrap text-left pl-2 pr-2">
+                      <Text
+                        textColor={`${
+                          selected === 0 ? 'whiteAlpha.900' : 'whiteAlpha.600'
+                        }`}
+                        className=""
+                        // fontSize={{ base: 'xs', md: 'medium' }}
+                      >
+                        {Names[0]}
+                      </Text>
+                    </MenuItem>
+                  </Link>
+                  <Link to={'/toptracks'}>
+                    <MenuItem className="mt-1 w-full text-lg font-bold rounded-sm   justify-start whitespace-nowrap text-center  pl-2">
+                      <Text
+                        textColor={`${
+                          selected === 1 ? 'whiteAlpha.900' : 'whiteAlpha.600'
+                        }`}
+                        className=""
+                        // fontSize={{ base: 'xs', md: 'medium' }}
+                      >
+                        {Names[1]}
+                      </Text>
+                      {/* </Button> */}
+                    </MenuItem>
+                  </Link>
+                  <Link to={'/favourites'}>
+                    <MenuItem className="mt-1 w-full text-lg font-bold rounded-sm   justify-start whitespace-nowrap text-left  pl-2">
+                      <Text
+                        textColor={`${
+                          selected === 2 ? 'whiteAlpha.900' : 'whiteAlpha.600'
+                        }`}
+                        className=""
+                        // fontSize={{ base: 'xs', md: 'medium' }}
+                      >
+                        {Names[2]}
+                      </Text>
+                    </MenuItem>
+                  </Link>
+                  <MenuItem className="mt-1 w-full text-lg font-bold  rounded-sm   justify-start whitespace-nowrap text-left  pl-1.5 pr-2 ">
                     <Text
                       textColor={`${
                         selected === 3 ? 'whiteAlpha.900' : 'whiteAlpha.600'
                       }`}
+                      className=""
                       // fontSize={{ base: 'xs', md: 'medium' }}
                     >
                       <Link to={'/recentlyPlayed'}>{Names[3]}</Link>
