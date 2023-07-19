@@ -34,6 +34,7 @@ const SearchBarForMenu: React.FC<props> = ({ color, setSearchInput }) => {
   return (
     <Box className=" " w={'fit'} mt={'2vh'} key={'SearchBar'}>
       <Input
+        autoFocus={false}
         className={`placeholder-neutral-200 placeholder-opacity-75 text-sm text-white text-opacity-40 tracking-wider invert-[.1] `}
         style={{ backgroundColor: `${shadeColor(color, -80)} ` }}
         type="email"

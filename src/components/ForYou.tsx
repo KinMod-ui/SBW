@@ -105,7 +105,8 @@ const ForYou: React.FC<props> = ({ color, setSongs, setPicked, picked }) => {
   return (
     <Stack direction={'row'} spacing={0}>
       <Text
-        className="fixed block md:hidden"
+        display={{ base: 'block', md: 'none' }}
+        className="fixed "
         textColor={'whiteAlpha.900'}
         fontWeight={'extrabold'}
         fontSize={'2xl'}
@@ -122,7 +123,8 @@ const ForYou: React.FC<props> = ({ color, setSongs, setPicked, picked }) => {
         h="100vh"
         w={'30vw'}
         pt={8}
-        className={'hidden md:block overflow-x-visible'}
+        display={{ base: 'none', md: 'block' }}
+        className={' overflow-x-visible'}
       >
         <Stack h={'95vh'}>
           <Text
@@ -210,7 +212,8 @@ const ForYou: React.FC<props> = ({ color, setSongs, setPicked, picked }) => {
         // w={'30vw'}
 
         // mt={8}
-        className={'flex md:hidden  align-middle ml-[12vw]'}
+        display={{ base: 'flex', md: 'none' }}
+        className={'  align-middle ml-[12vw]'}
       >
         <Dialog
           open={!closeMenu}

@@ -1,5 +1,15 @@
 @tailwind base;
 @tailwind components;
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden;
+}
+
 .scrollbar::-webkit-scrollbar {
   width: 8px;
   height: 10px;

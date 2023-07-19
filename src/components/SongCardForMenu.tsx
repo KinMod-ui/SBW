@@ -115,7 +115,8 @@ const SongCardForMenu: React.FC<songProps> = ({
               position={'absolute'}
               right={'5'}
               fontSize={''}
-              className="hidden lg:block text-white text-opacity-70 mt-6"
+              display={{ base: 'none', lg: 'block' }}
+              className=" text-white text-opacity-70 mt-6"
             >
               {songTime(songData.duration)}
             </Text>

@@ -57,7 +57,7 @@ function App() {
           <Box
             h={{ base: '5vh', md: 'auto' }}
             mb={{ base: '5vh', md: '0' }}
-            className="w-[90vw] md:w-[30vw] flex align-middle justify-center"
+            className="w-[90vw] md:w-[30vw] flex align-middle justify-center "
           >
             <MainComp
               color={color.color}

@@ -69,7 +69,8 @@ const Sidebar = () => {
                 textColor={'whiteAlpha.900'}
                 fontSize={'3xl'}
                 fontWeight={'bold'}
-                className={'hidden lg:block'}
+                display={{ base: 'none', lg: 'block' }}
+                // className={'hidden lg:block'}
               >
                 Spotify
               </Text>
@@ -78,12 +79,16 @@ const Sidebar = () => {
                 pt={2}
                 fontSize={'x-small'}
                 ml={'-1'}
-                className={'hidden lg:block'}
+                display={{ base: 'none', lg: 'block' }}
+                // className={'hidden lg:block'}
               >
                 ®
               </Text>
             </Stack>
-            <Box className={'hidden md:block'}>
+            <Box
+              display={{ base: 'none', md: 'block' }}
+              // className={'hidden md:block'}
+            >
               <Stack
                 direction={{ base: 'row', md: 'column' }}
                 className=" md:pt-6 mx-1 md:mx-4"
@@ -155,7 +160,10 @@ const Sidebar = () => {
             </Box>
           </Stack>
         </Box>
-        <Box className="absolute right-6 block md:hidden">
+        <Box
+          display={{ base: 'block', md: 'none' }}
+          className="absolute right-6 "
+        >
           <Menu
             closeOnBlur={true}
             styleConfig={{ background: 'black' }}
