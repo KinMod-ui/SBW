@@ -151,6 +151,7 @@ const MusicPlayer: React.FC<props> = ({
       const idx = picked.split(' ');
       audioComponent.current.src = songs[+idx[0]].url;
       togglePlayPause(true);
+      setImageError(false);
     }
     // setIsPlaying(true)
   }, [picked]);
@@ -203,9 +204,12 @@ const MusicPlayer: React.FC<props> = ({
       } else {
         nextSong = (+currSong[0] - 1 + songs.length) % songs.length;
       }
-      setPicked(String(nextSong) + currSong[1]);
+      // console.log(nextSong, currSong[1]);
+      setPicked(`${String(nextSong)} ${currSong[1]}`);
     }
   };
+
+  // console.log(song?.photo);
 
   return (
     <>

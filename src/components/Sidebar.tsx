@@ -179,9 +179,13 @@ const Sidebar = () => {
                 >
                   {!isOpen ? <HiMenu /> : <RxCross2 />}
                 </MenuButton>
-                <MenuList className="bg-black">
+                <MenuList
+                  zIndex={'sticky'}
+                  className="relative bg-black w-30 rounded-lg"
+                >
                   <MenuItem
-                    className="mt-1 rounded-sm hover:bg-white hover:text-black focus:bg-white focus:text-black  justify-start whitespace-nowrap text-left  w-fit ml-4"
+                    width={'90%'}
+                    className="mt-1 text-lg font-bold rounded-sm hover:bg-white hover:text-black focus:bg-white focus:text-black  justify-start whitespace-nowrap text-left ml-2 mr-2"
                     onClick={() => {
                       selected = 0;
                     }}
@@ -197,7 +201,8 @@ const Sidebar = () => {
                     </Text>
                   </MenuItem>
                   <MenuItem
-                    className="mt-1 rounded-sm hover:bg-white hover:text-black focus:bg-white focus:text-black  justify-start whitespace-nowrap text-left  w-fit ml-4"
+                    width={'90%'}
+                    className="mt-1 text-lg font-bold rounded-sm hover:bg-white hover:text-black focus:bg-white focus:text-black  justify-start whitespace-nowrap text-left  w-fit ml-2"
                     onClick={() => {
                       selected = 1;
                     }}
@@ -217,7 +222,8 @@ const Sidebar = () => {
                     {/* </Button> */}
                   </MenuItem>
                   <MenuItem
-                    className="mt-1 rounded-sm hover:bg-white hover:text-black focus:bg-white focus:text-black  justify-start whitespace-nowrap text-left  w-fit ml-4"
+                    width={'90%'}
+                    className="mt-1 text-lg font-bold rounded-sm hover:bg-white hover:text-black focus:bg-white focus:text-black  justify-start whitespace-nowrap text-left  w-fit ml-2"
                     onClick={() => {
                       selected = 2;
                     }}
@@ -232,7 +238,8 @@ const Sidebar = () => {
                     </Text>
                   </MenuItem>
                   <MenuItem
-                    className="mt-1 rounded-sm hover:bg-white hover:text-black focus:bg-white focus:text-black  justify-start whitespace-nowrap text-left  w-fit ml-4"
+                    width={'90%'}
+                    className="mt-1 text-lg font-bold  rounded-sm hover:bg-white hover:text-black focus:bg-white focus:text-black  justify-start whitespace-nowrap text-left  ml-1.5 mr-2 "
                     onClick={() => {
                       selected = 3;
                     }}

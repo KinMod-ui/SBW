@@ -231,7 +231,7 @@ const RecentlyPlayed: React.FC<props> = ({
           </DialogTrigger>
           <DialogContent
             style={{ backgroundColor: `${shadeColor(color, -50)} ` }}
-            className={`sm:max-w-[425px] rounded-lg`}
+            className={`sm:max-w-[425px] rounded-lg z-50`}
           >
             <DialogHeader>
               <DialogTitle>

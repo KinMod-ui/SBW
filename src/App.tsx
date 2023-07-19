@@ -50,7 +50,7 @@ function App() {
           direction={{ base: 'column-reverse', md: 'row' }}
           h={{ base: '70vh', md: '100vh' }}
           w={'80vw'}
-          mb={{ base: '10vh', md: '0' }}
+          mb={{ base: '10vh', sm: '0', md: '0' }}
           // bg={color.color}
           // mt={{ base: '10vh', md: 0 }}
           spacing={{ base: '5vh', md: '0' }}
