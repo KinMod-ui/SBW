@@ -30,15 +30,21 @@ const SearchBarForMenu: React.FC<props> = ({ color, setSearchInput }) => {
   //   if (setInputRef) setInputRef(inputRef);
   // }, [inputRef, setInputRef]);
 
+  const handleInputClick = () => {
+    if (inputRef.current) inputRef.current.readOnly = false;
+  };
+
   //   console.log(`bg-[${color}]`);
   return (
     <Box className=" " w={'fit'} mt={'2vh'} key={'SearchBar'}>
       <Input
-        autoFocus={false}
+        // autoFocus={false}
+        ref={inputRef}
+        onClick={handleInputClick}
+        readOnly
         className={`placeholder-neutral-200 placeholder-opacity-75 text-sm text-white text-opacity-40 tracking-wider invert-[.1] `}
         style={{ backgroundColor: `${shadeColor(color, -80)} ` }}
         type="email"
-        ref={inputRef}
         placeholder="Search Song, Artist"
         onChange={(e) => setSearchInput(e.target.value)}
       />
