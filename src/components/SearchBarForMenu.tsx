@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react';
 import { Input } from '../components/ui/input';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { shadeColor } from '../shadeColor';
 
 type props = {

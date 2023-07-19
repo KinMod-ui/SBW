@@ -11,16 +11,31 @@ import {
 } from '@chakra-ui/react';
 
 import { AvatarPage } from './Avatar';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { HiMenu } from 'react-icons/hi';
 import { RxCross2 } from 'react-icons/rx';
-import { useState } from 'react';
 
 // type props = {};
 
 const Sidebar = () => {
   const Names = ['For You', 'Top Tracks', 'Favourites', 'Recently Played'];
-  const [selected, setSelected] = useState(-1);
+  const links = ['', 'Top Tracks', 'Favourites', 'Recently Played'];
+  // const [selected, setSelected] = useState(-1);
+  let selected = -1;
+  // const { page } = useParams();
+  // links.forEach((n) =>
+  //   console.log(n.replace(/\s/g, '').toLowerCase(), location.pathname.slice(1))
+  // );
+
+  const location = useLocation();
+  // console.log(location);
+  // useEffect(() => {
+  // }, [history.location.pathname]);
+  const idx = links.findIndex(
+    (n) => n.replace(/\s/g, '').toLowerCase() === location.pathname.slice(1)
+  );
+  if (idx >= 0 && idx <= 3) selected = idx;
+  // console.log(idx, location.pathname);
 
   // const callSelect = (num: number) => {
   //   setIsSelected(num);
@@ -77,7 +92,9 @@ const Sidebar = () => {
                 justifyContent={'space-between'}
               >
                 <button
-                  onClick={() => setSelected(0)}
+                  onClick={() => {
+                    selected = 0;
+                  }}
                   className="rounded-sm justify-start whitespace-nowrap text-left  w-fit "
                 >
                   <Text
@@ -90,7 +107,9 @@ const Sidebar = () => {
                   </Text>
                 </button>
                 <button
-                  onClick={() => setSelected(1)}
+                  onClick={() => {
+                    selected = 1;
+                  }}
                   className="rounded-sm whitespace-nowrap text-left  w-fit "
                 >
                   <Text
@@ -103,7 +122,9 @@ const Sidebar = () => {
                   </Text>
                 </button>
                 <button
-                  onClick={() => setSelected(2)}
+                  onClick={() => {
+                    selected = 2;
+                  }}
                   className=" rounded-sm whitespace-nowrap text-left  w-fit "
                 >
                   <Text
@@ -116,7 +137,9 @@ const Sidebar = () => {
                   </Text>
                 </button>
                 <button
-                  onClick={() => setSelected(3)}
+                  onClick={() => {
+                    selected = 3;
+                  }}
                   className="rounded-sm whitespace-nowrap text-left  w-fit "
                 >
                   <Text
@@ -125,14 +148,14 @@ const Sidebar = () => {
                     }`}
                     // fontSize={{ base: 'xs', md: 'medium' }}
                   >
-                    <Link to={'/recentlyPlayed'}>{Names[3]}</Link>
+                    <Link to={'/recentlyplayed'}>{Names[3]}</Link>
                   </Text>
                 </button>
               </Stack>
             </Box>
           </Stack>
         </Box>
-        <Box className="absolute right-6 ">
+        <Box className="absolute right-6 block md:hidden">
           <Menu
             closeOnBlur={true}
             styleConfig={{ background: 'black' }}
@@ -151,7 +174,9 @@ const Sidebar = () => {
                 <MenuList className="bg-black">
                   <MenuItem>
                     <Button
-                      onClick={() => setSelected(0)}
+                      onClick={() => {
+                        selected = 0;
+                      }}
                       variant={'ghost'}
                       className="rounded-sm hover:bg-white hover:text-black focus:bg-white focus:text-black  justify-start whitespace-nowrap text-left  w-fit "
                     >
@@ -168,7 +193,9 @@ const Sidebar = () => {
                   </MenuItem>
                   <MenuItem>
                     <Button
-                      onClick={() => setSelected(1)}
+                      onClick={() => {
+                        selected = 1;
+                      }}
                       variant={'ghost'}
                       className="rounded-sm hover:bg-white hover:text-black focus:bg-white focus:text-black  justify-start whitespace-nowrap text-left  w-fit "
                     >
@@ -184,7 +211,9 @@ const Sidebar = () => {
                   </MenuItem>
                   <MenuItem>
                     <Button
-                      onClick={() => setSelected(2)}
+                      onClick={() => {
+                        selected = 2;
+                      }}
                       variant={'ghost'}
                       className="rounded-sm hover:bg-white hover:text-black focus:bg-white focus:text-black  justify-start whitespace-nowrap text-left  w-fit "
                     >
@@ -200,7 +229,9 @@ const Sidebar = () => {
                   </MenuItem>
                   <MenuItem>
                     <Button
-                      onClick={() => setSelected(3)}
+                      onClick={() => {
+                        selected = 3;
+                      }}
                       variant={'ghost'}
                       className="rounded-sm hover:bg-white hover:text-black focus:bg-white focus:text-black  justify-start whitespace-nowrap text-left  w-fit "
                     >

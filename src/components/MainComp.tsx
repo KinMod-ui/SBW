@@ -7,11 +7,11 @@ import RecentlyPlayed from './RecentlyPlayed';
 type props = {
   color: string;
   setSongs: React.Dispatch<React.SetStateAction<songType[]>>;
-  setPicked: React.Dispatch<React.SetStateAction<number>>;
+  setPicked: React.Dispatch<React.SetStateAction<string>>;
   setInputRef: React.Dispatch<
     React.SetStateAction<React.RefObject<HTMLInputElement> | undefined>
   >;
-  picked: number;
+  picked: string;
 };
 
 const MainComp: React.FC<props> = ({
@@ -59,7 +59,7 @@ const MainComp: React.FC<props> = ({
         }
       />
       <Route
-        path="/recentlyPlayed"
+        path="/recentlyplayed"
         element={
           <RecentlyPlayed
             color={color}

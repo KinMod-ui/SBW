@@ -14,13 +14,14 @@ import { Button } from './ui/button';
 import SongCardForMenu from './SongCardForMenu';
 import { shadeColor } from '../shadeColor';
 import SearchBarForMenu from './SearchBarForMenu';
+import { songType } from './ForYou';
 
 type props = {
   color: string;
   setSongs: React.Dispatch<React.SetStateAction<songType[]>>;
-  setPicked: React.Dispatch<React.SetStateAction<number>>;
+  setPicked: React.Dispatch<React.SetStateAction<string>>;
 
-  picked: number;
+  picked: string;
 };
 
 const queryGetALlSongs = gql`
@@ -35,14 +36,6 @@ const queryGetALlSongs = gql`
   }
 `;
 
-export type songType = {
-  artist: string;
-  duration: number;
-  photo: string;
-  title: string;
-  url: string;
-};
-
 type specialType = {
   getSongs: Array<songType>;
 };
@@ -53,7 +46,6 @@ const TopTracks: React.FC<props> = ({ color, setSongs, setPicked, picked }) => {
   });
   const [searchInput, setSearchInput] = useState('');
   const [closeMenu, setCloseMenu] = useState(true);
-  const [clicked, setClicked] = useState(false);
   // loading = true;
 
   // if (true) {
@@ -72,11 +64,13 @@ const TopTracks: React.FC<props> = ({ color, setSongs, setPicked, picked }) => {
 
   if (!loading && !error && dataTyped.getSongs) songs = dataTyped.getSongs;
   useEffect(() => {
-    if (clicked) {
-      setSongs(songs);
-      setClicked(false);
+    // console.log('clicked', clicked);
+    const idx = picked.split(' ');
+    if (+idx[1] === 1) {
+      setSongs((prev) => (prev !== songs ? songs : prev));
+      // setClicked(false);
     }
-  }, [clicked]);
+  }, [picked, songs, setSongs]);
 
   // console.log(color);
   if (!songs) {
@@ -104,10 +98,13 @@ const TopTracks: React.FC<props> = ({ color, setSongs, setPicked, picked }) => {
         className="fixed block md:hidden"
         textColor={'whiteAlpha.900'}
         fontWeight={'extrabold'}
-        fontSize={'3xl'}
+        fontSize={'2xl'}
         letterSpacing={'tight'}
         top={10}
-        left={'30vw'}
+        left={'22vw'}
+        w={'57vw'}
+        // bg={'green.100'}
+        textAlign={'center'}
       >
         Top Tracks
       </Text>
@@ -183,10 +180,12 @@ const TopTracks: React.FC<props> = ({ color, setSongs, setPicked, picked }) => {
                   <SongCard
                     key={idx}
                     songData={s}
+                    page={2}
+                    songs={songs}
+                    setSongs={setSongs}
                     setPicked={setPicked}
                     idx={idx}
                     picked={picked}
-                    setClicked={setClicked}
                   />
                 );
               })
@@ -280,6 +279,9 @@ const TopTracks: React.FC<props> = ({ color, setSongs, setPicked, picked }) => {
                     <SongCardForMenu
                       key={idx}
                       songData={s}
+                      page={2}
+                      songs={songs}
+                      setSongs={setSongs}
                       setPicked={setPicked}
                       idx={idx}
                       picked={picked}

@@ -18,11 +18,11 @@ import SearchBarForMenu from './SearchBarForMenu';
 type props = {
   color: string;
   setSongs: React.Dispatch<React.SetStateAction<songType[]>>;
-  setPicked: React.Dispatch<React.SetStateAction<number>>;
+  setPicked: React.Dispatch<React.SetStateAction<string>>;
   setInputRef: React.Dispatch<
     React.SetStateAction<React.RefObject<HTMLInputElement> | undefined>
   >;
-  picked: number;
+  picked: string;
 };
 
 const queryGetALlSongs = gql`
@@ -55,7 +55,7 @@ const ForYou: React.FC<props> = ({ color, setSongs, setPicked, picked }) => {
   });
   const [searchInput, setSearchInput] = useState('');
   const [closeMenu, setCloseMenu] = useState(true);
-  const [clicked, setClicked] = useState(false);
+  // const [clicked, setClicked] = useState(false);
   // loading = true;
 
   // if (true) {
@@ -74,11 +74,13 @@ const ForYou: React.FC<props> = ({ color, setSongs, setPicked, picked }) => {
 
   if (!loading && !error && dataTyped.getSongs) songs = dataTyped.getSongs;
   useEffect(() => {
-    if (clicked) {
-      setSongs(songs);
-      setClicked(false);
+    // console.log('clicked', clicked);
+    const idx = picked.split(' ');
+    if (+idx[1] === 1) {
+      setSongs((prev) => (prev !== songs ? songs : prev));
+      // setClicked(false);
     }
-  }, [clicked]);
+  }, [picked, songs, setSongs]);
 
   // console.log(color);
   if (!songs) {
@@ -102,6 +104,20 @@ const ForYou: React.FC<props> = ({ color, setSongs, setPicked, picked }) => {
   // console.log(searchInput);
   return (
     <Stack direction={'row'} spacing={0}>
+      <Text
+        className="fixed block md:hidden"
+        textColor={'whiteAlpha.900'}
+        fontWeight={'extrabold'}
+        fontSize={'2xl'}
+        letterSpacing={'tight'}
+        top={10}
+        left={'22vw'}
+        w={'57vw'}
+        // bg={'green.100'}
+        textAlign={'center'}
+      >
+        For You
+      </Text>
       <Box
         h="100vh"
         w={'30vw'}
@@ -176,8 +192,11 @@ const ForYou: React.FC<props> = ({ color, setSongs, setPicked, picked }) => {
                     songData={s}
                     setPicked={setPicked}
                     idx={idx}
+                    songs={songs}
+                    setSongs={setSongs}
                     picked={picked}
-                    setClicked={setClicked}
+                    page={1}
+                    // setClicked={setClicked}
                   />
                 );
               })
@@ -269,8 +288,11 @@ const ForYou: React.FC<props> = ({ color, setSongs, setPicked, picked }) => {
                 filteredSongs.map((s, idx) => {
                   return (
                     <SongCardForMenu
+                      page={1}
                       key={idx}
                       songData={s}
+                      songs={songs}
+                      setSongs={setSongs}
                       setPicked={setPicked}
                       idx={idx}
                       picked={picked}

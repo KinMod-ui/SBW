@@ -19,7 +19,7 @@ function App() {
   });
 
   const [songs, setSongs] = useState<songType[]>([]);
-  const [picked, setPicked] = useState(-1);
+  const [picked, setPicked] = useState('-1');
   const [inputRef, setInputRef] = useState<React.RefObject<HTMLInputElement>>();
 
   const gradientStyle = {
@@ -27,6 +27,7 @@ function App() {
       color.color,
       -80
     )}, ${shadeColor(color.color, -20)})`,
+    transition: 'background-image 1s ease ',
     /* Add other styles if needed */
   };
 
@@ -71,7 +72,11 @@ function App() {
             className="w-[86vw] md:w-[50vw] "
           >
             <MusicPlayer
-              song={picked > -1 ? songs[picked] : undefined}
+              song={
+                picked.split(' ')[0] !== '-1'
+                  ? songs[+picked.split(' ')[0]]
+                  : undefined
+              }
               songs={songs}
               setColor={setColor}
               inputRef={inputRef}

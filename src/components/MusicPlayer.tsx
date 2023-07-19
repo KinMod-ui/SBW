@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 import type { songType } from './ForYou';
 import { useEffect, useRef, useState } from 'react';
-import { Button } from './ui/button';
+
 import { FaForward, FaBackward, FaPause, FaPlay } from 'react-icons/fa';
 import { Popover, PopoverContent, PopoverTrigger } from '@chakra-ui/react';
 import { HiSpeakerWave } from 'react-icons/hi2';
@@ -24,9 +24,9 @@ import { colorState } from '../App';
 type props = {
   song?: songType;
   songs?: songType[];
-  picked: number;
+  picked: string;
   setColor: React.Dispatch<React.SetStateAction<colorState>>;
-  setPicked: React.Dispatch<React.SetStateAction<number>>;
+  setPicked: React.Dispatch<React.SetStateAction<string>>;
   inputRef: React.RefObject<HTMLInputElement> | undefined;
 };
 
@@ -36,7 +36,6 @@ const MusicPlayer: React.FC<props> = ({
   picked,
   setColor,
   setPicked,
-  inputRef,
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   // const [_, setCurrentTime] = useState(0);
@@ -50,7 +49,7 @@ const MusicPlayer: React.FC<props> = ({
   // const [dominantColor, setDominantColor] = useState('transparent');
 
   useEffect(() => {
-    if (songs && picked >= 0) {
+    if (songs && picked !== '-1') {
       const colorThief = new ColorThief();
       const img = imageRef.current;
 
@@ -142,18 +141,19 @@ const MusicPlayer: React.FC<props> = ({
   };
 
   useEffect(() => {
-    console.log(picked, song, songs);
+    // console.log(picked, song, songs);
     if (
-      picked !== -1 &&
+      picked !== '-1' &&
       songs !== undefined &&
       songs.length !== 0 &&
       audioComponent.current !== null
     ) {
-      audioComponent.current.src = songs[picked].url;
+      const idx = picked.split(' ');
+      audioComponent.current.src = songs[+idx[0]].url;
       togglePlayPause(true);
     }
     // setIsPlaying(true)
-  }, [picked, song]);
+  }, [picked]);
 
   // useEffect(() => {
   //   setIsPlaying(false);
@@ -194,12 +194,17 @@ const MusicPlayer: React.FC<props> = ({
   // console.log(picked >= 0 ? songs[picked].photo : -1);
 
   const handleNextSong = (dif: number) => {
-    if (songs)
+    if (songs) {
+      const currSong: string[] = picked.split(' ');
+      if (currSong.length <= 1) return;
+      let nextSong = -1;
       if (dif === 1) {
-        setPicked((prev) => (prev + 1) % songs.length);
+        nextSong = (+currSong[0] + 1) % songs.length;
       } else {
-        setPicked((prev) => (prev - 1 + songs.length) % songs.length);
+        nextSong = (+currSong[0] - 1 + songs.length) % songs.length;
       }
+      setPicked(String(nextSong) + currSong[1]);
+    }
   };
 
   return (
@@ -257,7 +262,7 @@ const MusicPlayer: React.FC<props> = ({
                   className="border-none"
                   value={value !== 'NaN' ? +value % 100 : 0}
                   focusThumbOnChange={false}
-                  isDisabled={picked === -1}
+                  isDisabled={picked === '-1'}
                   // width="300px"
                   // className="w-10"
                   // paddingLeft={0}
@@ -297,7 +302,7 @@ const MusicPlayer: React.FC<props> = ({
                     md: '3rem',
                     lg: '3.5rem',
                   }}
-                  isDisabled={picked === -1}
+                  isDisabled={picked === '-1'}
                   // width={'3.5rem'}
                   className="rounded-full  bg-[#1e1d1b] flex justify-center align-middle"
                   aria-label="settings"
@@ -322,7 +327,7 @@ const MusicPlayer: React.FC<props> = ({
                     minW={'4vw'}
                     className="w-3 h-3  opacity-70 "
                     aria-label="previous song"
-                    isDisabled={picked === -1}
+                    isDisabled={picked === '-1'}
                     onClick={() => handleNextSong(-1)}
                     icon={
                       <FaBackward
@@ -351,7 +356,7 @@ const MusicPlayer: React.FC<props> = ({
                       lg: '3.5rem',
                     }}
                     className=" border-none   bg-white  disabled:bg-transparent disabled:text-white"
-                    isDisabled={picked === -1}
+                    isDisabled={picked === '-1'}
                     borderRadius="full"
                     onClick={() => togglePlayPause()}
                     icon={
@@ -383,7 +388,7 @@ const MusicPlayer: React.FC<props> = ({
                     minW={'4vw'}
                     className="w-3 h-3  opacity-70 "
                     aria-label="previous song"
-                    isDisabled={picked === -1}
+                    isDisabled={picked === '-1'}
                     onClick={() => handleNextSong(1)}
                     icon={
                       <FaForward
@@ -415,7 +420,7 @@ const MusicPlayer: React.FC<props> = ({
                         md: '3rem',
                         lg: '3.5rem',
                       }}
-                      isDisabled={picked === -1}
+                      isDisabled={picked === '-1'}
                       // width={'3.5rem'}
                       className=" rounded-full  bg-[#1e1d1b] flex justify-center align-middle"
                       aria-label="settings"

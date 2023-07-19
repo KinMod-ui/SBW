@@ -6,7 +6,7 @@ type props = {
 };
 
 const Layout = (props: props) => {
-  console.log(props);
+  // console.log(props);
 
   return (
     <div>

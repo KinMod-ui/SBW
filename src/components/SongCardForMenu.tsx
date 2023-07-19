@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar';
 import { Box, SkeletonCircle, Stack, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
+import { songType } from './ForYou';
 
 // {
 //     artist: 'Weeknd',
@@ -19,10 +20,13 @@ type songProps = {
     title: string;
     url: string;
   };
-  setPicked: React.Dispatch<React.SetStateAction<number>>;
+  setPicked: React.Dispatch<React.SetStateAction<string>>;
+  picked: string;
   idx: number;
-  picked: number;
   setCloseMenu: React.Dispatch<React.SetStateAction<boolean>>;
+  setSongs: React.Dispatch<React.SetStateAction<songType[]>>;
+  songs: songType[];
+  page: number;
 };
 
 const songTime = (time: number) => {
@@ -41,20 +45,25 @@ const SongCardForMenu: React.FC<songProps> = ({
   setPicked,
   picked,
   idx,
+  setSongs,
+  songs,
   setCloseMenu,
+  page,
 }) => {
   const clicked = () => {
-    console.log(picked, idx);
-    setPicked(idx);
+    // console.log(picked, idx);
+    setPicked(`${String(idx)} ${String(page)}`);
+    // setPicked(idx);
+    setSongs(songs);
     setCloseMenu(true);
   };
 
   const [active, setActive] = useState(false);
 
-  console.log(picked, idx);
   useEffect(() => {
-    setActive(picked === idx);
-  }, [picked, idx]);
+    const split = picked.split(' ');
+    setActive(+split[0] === idx && +split[1] === page);
+  }, [picked, idx, page]);
 
   return (
     <>

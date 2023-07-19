@@ -14,13 +14,14 @@ import { Button } from './ui/button';
 import SongCardForMenu from './SongCardForMenu';
 import { shadeColor } from '../shadeColor';
 import SearchBarForMenu from './SearchBarForMenu';
+import { songType } from './ForYou';
 
 type props = {
   color: string;
   setSongs: React.Dispatch<React.SetStateAction<songType[]>>;
-  setPicked: React.Dispatch<React.SetStateAction<number>>;
+  setPicked: React.Dispatch<React.SetStateAction<string>>;
 
-  picked: number;
+  picked: string;
 };
 
 const queryGetALlSongs = gql`
@@ -34,14 +35,6 @@ const queryGetALlSongs = gql`
     }
   }
 `;
-
-export type songType = {
-  artist: string;
-  duration: number;
-  photo: string;
-  title: string;
-  url: string;
-};
 
 type specialType = {
   getSongs: Array<songType>;
@@ -58,7 +51,7 @@ const RecentlyPlayed: React.FC<props> = ({
   });
   const [searchInput, setSearchInput] = useState('');
   const [closeMenu, setCloseMenu] = useState(true);
-  const [clicked, setClicked] = useState(false);
+
   // loading = true;
 
   // if (true) {
@@ -77,11 +70,13 @@ const RecentlyPlayed: React.FC<props> = ({
 
   if (!loading && !error && dataTyped.getSongs) songs = dataTyped.getSongs;
   useEffect(() => {
-    if (clicked) {
-      setSongs(songs);
-      setClicked(false);
+    // console.log('clicked', clicked);
+    const idx = picked.split(' ');
+    if (+idx[1] === 4) {
+      setSongs((prev) => (prev !== songs ? songs : prev));
+      // setClicked(false);
     }
-  }, [clicked]);
+  }, [picked, songs, setSongs]);
 
   // console.log(color);
   if (!songs) {
@@ -105,6 +100,21 @@ const RecentlyPlayed: React.FC<props> = ({
   // console.log(searchInput);
   return (
     <Stack direction={'row'} spacing={0}>
+      <Text
+        className="fixed block md:hidden"
+        textColor={'whiteAlpha.900'}
+        fontWeight={'extrabold'}
+        fontSize={'2xl'}
+        letterSpacing={'tight'}
+        top={10}
+        // bg={'green.100'}
+
+        left={'22vw'}
+        w={'57vw'}
+        textAlign={'center'}
+      >
+        Recently Played
+      </Text>
       <Box
         h="100vh"
         w={'30vw'}
@@ -177,10 +187,12 @@ const RecentlyPlayed: React.FC<props> = ({
                   <SongCard
                     key={idx}
                     songData={s}
+                    page={4}
+                    songs={songs}
+                    setSongs={setSongs}
                     setPicked={setPicked}
                     idx={idx}
                     picked={picked}
-                    setClicked={setClicked}
                   />
                 );
               })
@@ -273,6 +285,9 @@ const RecentlyPlayed: React.FC<props> = ({
                   return (
                     <SongCardForMenu
                       key={idx}
+                      page={4}
+                      songs={songs}
+                      setSongs={setSongs}
                       songData={s}
                       setPicked={setPicked}
                       idx={idx}
