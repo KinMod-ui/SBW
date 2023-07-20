@@ -102,7 +102,7 @@ const Favourites: React.FC<props> = ({
     <Stack direction={'row'} spacing={0}>
       <Text
         display={{ base: 'block', md: 'none' }}
-        className="fixed "
+        className="absolute"
         textColor={'whiteAlpha.900'}
         fontWeight={'extrabold'}
         fontSize={'2xl'}
